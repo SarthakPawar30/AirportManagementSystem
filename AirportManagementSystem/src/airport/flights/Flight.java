@@ -1,5 +1,7 @@
 package airport.flights;
 
+import airport.exceptions.FlightFullException;
+
 public class Flight {
     protected String flightId, source, destination, type;
     protected int capacity, booked = 0;
@@ -14,7 +16,7 @@ public class Flight {
         this.baseFare = fare;
         this.extraPerKg = extra;
     }
-    
+
     public String getFlightId() {
         return flightId;
     }
@@ -27,12 +29,12 @@ public class Flight {
         return extraPerKg;
     }
 
-    public boolean bookSeat() {
-        if (booked < capacity) {
-            booked++;
-            return true;
+    // 🔥 Exception-based booking
+    public void bookSeat() throws FlightFullException {
+        if (booked >= capacity) {
+            throw new FlightFullException("❌ Flight is FULL!");
         }
-        return false;
+        booked++;
     }
 
     public void display() {
